@@ -1,0 +1,36 @@
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
+from .models import News
+from .forms import NewsForm
+from django.utils import timezone
+
+
+def index(request):
+    news = News.objects.order_by('-create_time')
+    context = {'news': news}
+    return render(request, 'news/index.html', context)
+
+
+def add(request):
+    if request.method == 'POST':
+        news = NewsForm(request.POST)
+        if news.is_valid():
+            news = news.save(commit=False)
+            # news.author = request.user
+            news.create_time = timezone.now()
+            news.last_edit_time = timezone.now()
+            news.save()
+            return redirect('index')
+        else:
+            context = {'form': news}
+            return render(request, 'news/add.html', context)
+    else:
+        news = NewsForm()
+        context = {'form': news}
+        return render(request, 'news/add.html', context)
+
+
+def get(request, id):
+    news = get_object_or_404(News, id=id)
+    context = {'news': news}
+    return render(request, 'news/view.html', context)
