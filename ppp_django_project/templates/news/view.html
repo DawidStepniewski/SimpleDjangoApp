@@ -5,10 +5,15 @@
     <title>Title</title>
 </head>
 <body>
+    {% extends "news/base.html" %}
+    {% block content %}
+
     {{ news.topic }}
     {{ news.author }}
     {{ news.text }}
     {{ news.create_time }}
     {{ news.last_edit_time }}
+
+    {% endblock content%}
 </body>
 </html>

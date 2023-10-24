@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import News
 from .forms import NewsForm
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -11,6 +12,7 @@ def index(request):
     return render(request, 'news/index.html', context)
 
 
+@login_required(login_url='/login/')
 def add(request):
     if request.method == 'POST':
         news = NewsForm(request.POST)

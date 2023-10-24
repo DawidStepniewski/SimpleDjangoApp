@@ -5,10 +5,15 @@
     <title>Title</title>
 </head>
 <body>
+    {% extends "news/base.html" %}
+    {% block content %}
+
     <form action="/news/add/" method="post">
         {% csrf_token %}
         {{ form.as_p }}
     <input type="submit" value="ADD">
     </form>
+
+    {% endblock content%}
 </body>
 </html>
