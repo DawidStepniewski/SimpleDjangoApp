@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "books/base.html" %}
+
+  {% block content %}
+  <h2>Delete Book</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+    <p>Are you sure that you want to delete the book "{{books.title}}"?</p>
+    <div>
+      <button type="submit">Yes, Delete</button>
+      <a href="{% url 'index' %}">Cancel</a>
+    </div>
+  </form>
+
+  {% endblock content %}
+</body>
+</html>

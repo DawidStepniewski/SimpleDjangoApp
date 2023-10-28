@@ -2,12 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Default Title</title>
+    <title>Title</title>
 </head>
 <body>
     {% extends "books/base.html" %}
     {% block content %}
-    <h2>Home Page</h2>
+
+    {{ books.title }}
+    {{ books.author }}
+    {{ books.create_time }}
+    {{ books.last_edit_time }}
+
     {% endblock content%}
 </body>
 </html>
