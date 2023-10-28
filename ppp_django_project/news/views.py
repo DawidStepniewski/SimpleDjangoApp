@@ -18,7 +18,6 @@ def add(request):
         news = NewsForm(request.POST)
         if news.is_valid():
             news = news.save(commit=False)
-            # news.author = request.user
             news.create_time = timezone.now()
             news.last_edit_time = timezone.now()
             news.save()
@@ -31,6 +30,22 @@ def add(request):
         context = {'form': news}
         return render(request, 'news/add.html', context)
 
+
+@login_required
+def edit(request, id):
+    news = get_object_or_404(News, id=id)
+
+    if request.method == 'GET':
+        context = {'form': NewsForm(instance=news), 'id': id}
+        return render(request, 'news/edit.html', context)
+
+    elif request.method == 'POST':
+        form = NewsForm(request.POST, instance=news)
+        if form.is_valid():
+            form.save()
+            return render(request, 'news/index.html', {'news': News.objects.order_by('-create_time')})
+        else:
+            return render(request, 'news/edit.html', {'form': form})
 
 def get(request, id):
     news = get_object_or_404(News, id=id)
